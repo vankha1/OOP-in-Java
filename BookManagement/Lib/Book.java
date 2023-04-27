@@ -6,6 +6,12 @@ public class Book {
     private String author;
     private int amount;
 
+    public Book(){
+        this.id = 0;
+        this.name = "";
+        this.author = "";
+        this.amount = 0;
+    }
     public Book(int id){
         this.id = id;
     }

@@ -6,6 +6,7 @@ public class Worker {
     ArrayList<Book> borrowedBooks;
     public Worker(Library lib){
         this.lib = lib;
+        borrowedBooks = new ArrayList<>();
     }
     public void addBook(Book book){
         lib.getNameBooks().add(book);
@@ -24,30 +25,39 @@ public class Worker {
     public void borrowBook(Book book){
         boolean isBorrowed = false;
         for (int i = 0; i < lib.getNameBooks().size(); i++){
-            if (lib.getNameBooks().get(i).getId() == book.getId()){
-                borrowedBooks.add(book);
+            Book temp = lib.getNameBooks().get(i);
+            if (temp.getId() == book.getId()){
+                temp.setAmount(temp.getAmount() - 1);
+                if (temp.getAmount() == 0){
+                    lib.getNameBooks().remove(temp);
+                    lib.setNumberOfBooks(lib.getNameBooks().size());
+                }
+                borrowedBooks.add(temp);
                 isBorrowed = true;
             }
         }
         if (isBorrowed){
-            book.setAmount(book.getAmount() - 1);
-            if (book.getAmount() == 0){
-                lib.getNameBooks().remove(book);
-                lib.setNumberOfBooks(lib.getNameBooks().size() - 1);
-            }
-            System.out.println("Have borrowed");
+            System.out.println("--Have borrowed !!!--");
         } else {
-            System.out.println("The book is not found to borrow!!!");
+            System.out.println("--The book is not found to borrow!!!--");
         }
     }
 
     public void returnBook(Book book){
+        // boolean checked = false;
+        if (borrowedBooks.isEmpty()){
+            System.out.println("No borrowed books!!!");
+            return;
+        }
         for (int i = 0; i < borrowedBooks.size(); i++){
-            if (borrowedBooks.get(i).getId() == book.getId()){
-                book.setAmount(book.getAmount() + 1);
+            Book temp = borrowedBooks.get(i);
+            if (temp.getId() == book.getId()){
+                temp.setAmount(temp.getAmount() + 1);
+                if (temp.getAmount() == 1){
+                    lib.getNameBooks().add(temp);
+                    lib.setNumberOfBooks(lib.getNameBooks().size());
+                }
                 borrowedBooks.remove(i);
-                if (book.getAmount() == 1)
-                    lib.getNameBooks().add(book);
                 return;
             }
         }
