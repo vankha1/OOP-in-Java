@@ -1,5 +1,4 @@
 package BookManagement;
-import java.util.ArrayList;
 import java.util.Scanner;
 
 import BookManagement.Lib.*;
@@ -60,7 +59,7 @@ public class main {
         System.out.println("Enter the id of the book :");
         int id = myobj.nextInt();
         System.out.println("Enter the name of the book :");
-        String dummy = myobj.nextLine();
+        myobj.nextLine();
         String name = myobj.nextLine();
         System.out.println("Enter the author of the book :");
         String author = myobj.nextLine();
